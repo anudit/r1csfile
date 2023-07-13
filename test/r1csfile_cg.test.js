@@ -1,6 +1,6 @@
-import path from "path";
 import assert from "assert";
-import {readR1cs} from "../src/r1csfile.js";
+import path from "path";
+import { readR1cs } from "../src/r1csfile.js";
 
 const cgList = [
     {
@@ -32,7 +32,7 @@ describe("Parse R1CS Custom Gates Sections file", function () {
 
     it("Parse R1CS Custom Gates example file", async () => {
         let fileName = path.join("test", "testutils", "circuitCG.r1cs");
-        const cir = await readR1cs(fileName, {loadCustomGates: true});
+        const cir = await readR1cs(fileName, { loadCustomGates: true });
 
         for (let i = 0; i < cir.customGates.length; i++) {
             for (let j = 0; j < cir.customGates[i].parameters.length; j++) {
@@ -43,6 +43,6 @@ describe("Parse R1CS Custom Gates Sections file", function () {
         assert.deepEqual(cir.customGates, cgList);
         assert.deepEqual(cir.customGatesUses, cgUses);
 
-        cir.curve.terminate();
+        // cir.curve.terminate();
     });
 });

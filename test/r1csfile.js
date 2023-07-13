@@ -1,6 +1,6 @@
-import * as r1cs from "../src/r1csfile.js";
-import path from "path";
 import assert from "assert";
+import path from "path";
+import * as r1cs from "../src/r1csfile.js";
 
 const primeStr = "21888242871839275222246405745257275088548364400416034343698204186575808495617";
 
@@ -29,7 +29,7 @@ const expected = {
                 "0": "5",
                 "2": "7"
             }
-        ],[
+        ], [
             {
                 "1": "4",
                 "4": "8",
@@ -40,7 +40,7 @@ const expected = {
                 "6": "6"
             },
             {}
-        ],[
+        ], [
             {
                 "6": "4"
             },
@@ -68,7 +68,7 @@ const expected = {
 };
 
 export function stringifyBigInts(Fr, o) {
-    if ((typeof(o) == "bigint") || o.eq !== undefined)  {
+    if ((typeof (o) == "bigint") || o.eq !== undefined) {
         return o.toString(10);
     } else if (o instanceof Uint8Array) {
         return Fr.toString(o);
@@ -77,7 +77,7 @@ export function stringifyBigInts(Fr, o) {
     } else if (typeof o == "object") {
         const res = {};
         const keys = Object.keys(o);
-        keys.forEach( (k) => {
+        keys.forEach((k) => {
             res[k] = stringifyBigInts(Fr, o[k]);
         });
         return res;
@@ -89,7 +89,7 @@ export function stringifyBigInts(Fr, o) {
 describe("Parse R1CS file", function () {
     this.timeout(1000000000);
     it("Parse example file", async () => {
-        let cir = await r1cs.readR1cs(path.join("test" , "testutils", "example.r1cs"), true, true);
+        let cir = await r1cs.readR1cs(path.join("test", "testutils", "example.r1cs"), true, true);
 
         const curve = cir.curve;
         delete cir.Fr;
@@ -100,12 +100,12 @@ describe("Parse R1CS file", function () {
 
         assert.deepEqual(cir, expected);
 
-        await curve.terminate();
+        // await curve.terminate();
     });
 
     it("Parse example file with struct as second parameter", async () => {
-        const struct = {loadConstraints: true, loadMap: true};
-        let cir = await r1cs.readR1cs(path. join("test" , "testutils", "example.r1cs"), struct);
+        const struct = { loadConstraints: true, loadMap: true };
+        let cir = await r1cs.readR1cs(path.join("test", "testutils", "example.r1cs"), struct);
 
         const curve = cir.curve;
         delete cir.Fr;
@@ -116,6 +116,6 @@ describe("Parse R1CS file", function () {
 
         assert.deepEqual(cir, expected);
 
-        await curve.terminate();
+        // await curve.terminate();
     });
 });
